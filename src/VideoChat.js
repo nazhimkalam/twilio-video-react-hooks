@@ -18,10 +18,11 @@ const VideoChat = () => {
   }, []);
 
   const handleSubmit = useCallback(
+    // we will be getting a token from the server side in-order to create the room and get started
     async (event) => {
       event.preventDefault();
       setConnecting(true);
-      const data = await fetch("/video/token", {
+      const data = await fetch("https://react-video-app-server.herokuapp.com/video/token", {
         method: "POST",
         body: JSON.stringify({
           identity: username,
@@ -39,7 +40,7 @@ const VideoChat = () => {
           setRoom(room);
         })
         .catch((err) => {
-          console.error(err);
+          alert(err);
           setConnecting(false);
         });
     },
@@ -47,6 +48,7 @@ const VideoChat = () => {
   );
 
   const handleLogout = useCallback(() => {
+    // setting the logged out room to null
     setRoom((prevRoom) => {
       if (prevRoom) {
         prevRoom.localParticipant.tracks.forEach((trackPub) => {
@@ -77,13 +79,15 @@ const VideoChat = () => {
     }
   }, [room, handleLogout]);
 
-  let render;
   if (room) {
-    render = (
+    // when room is created this component gets fired
+    return (
       <Room roomName={roomName} room={room} handleLogout={handleLogout} />
     );
   } else {
-    render = (
+    // when users logs out of the room they are sent back to the lobby
+    // lobby is where they are to enter the name and the room name to join the room
+    return (
       <Lobby
         username={username}
         roomName={roomName}
@@ -94,7 +98,6 @@ const VideoChat = () => {
       />
     );
   }
-  return render;
 };
 
 export default VideoChat;

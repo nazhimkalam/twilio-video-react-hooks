@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 
 const Lobby = ({
   username,
@@ -8,10 +9,13 @@ const Lobby = ({
   handleSubmit,
   connecting,
 }) => {
+ 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Enter a room</h2>
       <div>
+        <div>
+        
+        </div>
         <label htmlFor="name">Name:</label>
         <input
           type="text"
@@ -35,7 +39,10 @@ const Lobby = ({
         />
       </div>
 
-      <button type="submit" disabled={connecting}>
+      <button
+        type="submit"
+        style={{ backgroundColor: "brown" }}
+        disabled={connecting}>
         {connecting ? "Connecting" : "Join"}
       </button>
     </form>
