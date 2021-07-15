@@ -16,12 +16,15 @@ const Participant = ({ participant, currentUser }) => {
   const audioRef = useRef();
 
   const onHandleToggleMic = () => {
-    setonMic((onMic) => !onMic);
+    setonMic((onMic) => {
+      onMic ? audioTracks[0].stop() : audioTracks[0].restart();
+      return !onMic;
+    });
   };
 
   const onHandleToggleVideo = () => {
     setonVideo((onVideo) => {
-      onVideo ? videoTracks[0].stop() : videoTracks[0].restart()
+      onVideo ? videoTracks[0].stop() : videoTracks[0].restart();
       return !onVideo;
     });
   };
@@ -85,16 +88,20 @@ const Participant = ({ participant, currentUser }) => {
     <div className="participant">
       <h3>{participant.identity}</h3>
       <video ref={videoRef} />
-      <audio ref={audioRef} muted={onMic ? true : false} />
+      <audio ref={audioRef} />
       {currentUser && (
         <div style={{ border: "1px white solid" }}>
           <h2>Options</h2>
           <div>
-            {/* <IconButton
-        onClick={onHandleToggleMic}
-        style={{ color: "white", backgroundColor: 'black', border: "1px white solid" }}>
-        {!onMic ? <MicIcon /> : <MicOffIcon />}
-      </IconButton> */}
+            <IconButton
+              onClick={onHandleToggleMic}
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                border: "1px white solid",
+              }}>
+              {onMic ? <MicIcon /> : <MicOffIcon />}
+            </IconButton>
             <br />
             <IconButton
               onClick={onHandleToggleVideo}

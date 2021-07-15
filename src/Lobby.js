@@ -14,7 +14,7 @@ const Lobby = ({
     <form onSubmit={handleSubmit}>
       <div>
         <div>
-        <h2>Updated Version 1.50</h2>
+        <h2>Updated Version 1.8</h2>
         </div>
         <label htmlFor="name">Name:</label>
         <input
