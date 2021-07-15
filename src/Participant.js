@@ -6,7 +6,7 @@ import MicOffIcon from "@material-ui/icons/MicOff";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import VideocamOffIcon from "@material-ui/icons/VideocamOff";
 
-const Participant = ({ participant }) => {
+const Participant = ({ participant, currentUser }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
   const [onMic, setonMic] = useState(true);
@@ -21,7 +21,9 @@ const Participant = ({ participant }) => {
 
   const onHandleToggleVideo = () => {
     setonVideo((onVideo) => {
-      onVideo ? videoTracks[0].detach() : videoTracks[0].attach(videoRef.current);;
+      onVideo
+        ? videoTracks[0].detach()
+        : videoTracks[0].attach(videoRef.current);
       return !onVideo;
     });
   };
@@ -86,26 +88,28 @@ const Participant = ({ participant }) => {
       <h3>{participant.identity}</h3>
       <video ref={videoRef} />
       <audio ref={audioRef} muted={onMic ? true : false} />
-      <div style={{ border: "1px white solid" }}>
-        <h2>Options</h2>
-        <div>
-          {/* <IconButton
-            onClick={onHandleToggleMic}
-            style={{ color: "white", backgroundColor: 'black', border: "1px white solid" }}>
-            {!onMic ? <MicIcon /> : <MicOffIcon />}
-          </IconButton> */}
-          <br />
-          <IconButton
-            onClick={onHandleToggleVideo}
-            style={{
-              color: "white",
-              backgroundColor: "black",
-              border: "1px white solid",
-            }}>
-            {onVideo ? <VideocamIcon /> : <VideocamOffIcon />}
-          </IconButton>
+      {currentUser && (
+        <div style={{ border: "1px white solid" }}>
+          <h2>Options</h2>
+          <div>
+            {/* <IconButton
+        onClick={onHandleToggleMic}
+        style={{ color: "white", backgroundColor: 'black', border: "1px white solid" }}>
+        {!onMic ? <MicIcon /> : <MicOffIcon />}
+      </IconButton> */}
+            <br />
+            <IconButton
+              onClick={onHandleToggleVideo}
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                border: "1px white solid",
+              }}>
+              {onVideo ? <VideocamIcon /> : <VideocamOffIcon />}
+            </IconButton>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
