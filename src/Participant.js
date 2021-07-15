@@ -21,9 +21,7 @@ const Participant = ({ participant, currentUser }) => {
 
   const onHandleToggleVideo = () => {
     setonVideo((onVideo) => {
-      onVideo
-        ? videoTracks[0].detach()
-        : videoTracks[0].attach(videoRef.current);
+      onVideo ? videoTracks[0].stop() : videoTracks[0].restart()
       return !onVideo;
     });
   };
