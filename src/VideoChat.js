@@ -22,16 +22,19 @@ const VideoChat = () => {
     async (event) => {
       event.preventDefault();
       setConnecting(true);
-      const data = await fetch("/video/token", {
-        method: "POST",
-        body: JSON.stringify({
-          identity: username,
-          room: roomName,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json());
+      const data = await fetch(
+        "https://react-video-app-server.herokuapp.com/video/token",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            identity: username,
+            room: roomName,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => res.json());
       Video.connect(data.token, {
         name: roomName,
       })
@@ -81,9 +84,7 @@ const VideoChat = () => {
 
   if (room) {
     // when room is created this component gets fired
-    return (
-      <Room roomName={roomName} room={room} handleLogout={handleLogout} />
-    );
+    return <Room roomName={roomName} room={room} handleLogout={handleLogout} />;
   } else {
     // when users logs out of the room they are sent back to the lobby
     // lobby is where they are to enter the name and the room name to join the room
