@@ -22,7 +22,7 @@ const VideoChat = () => {
     async (event) => {
       event.preventDefault();
       setConnecting(true);
-      const data = await fetch("https://react-video-app-server.herokuapp.com/video/token", {
+      const data = await fetch("/video/token", {
         method: "POST",
         body: JSON.stringify({
           identity: username,

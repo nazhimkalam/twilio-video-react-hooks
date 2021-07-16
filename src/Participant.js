@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { IconButton } from "@material-ui/core";
 import MicIcon from "@material-ui/icons/Mic";
 import ReactPlayer from "react-player";
+import styled from "styled-components";
 import MicOffIcon from "@material-ui/icons/MicOff";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import VideocamOffIcon from "@material-ui/icons/VideocamOff";
@@ -85,38 +86,68 @@ const Participant = ({ participant, currentUser }) => {
   }, [audioTracks]);
 
   return (
-    <div className="participant">
+    <Container>
       <h3>{participant.identity}</h3>
       <video ref={videoRef} />
       <audio ref={audioRef} />
       {currentUser && (
-        <div style={{ border: "1px white solid" }}>
-          <h2>Options</h2>
-          <div>
-            <IconButton
-              onClick={onHandleToggleMic}
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                border: "1px white solid",
-              }}>
-              {onMic ? <MicIcon /> : <MicOffIcon />}
-            </IconButton>
-            <br />
-            <IconButton
-              onClick={onHandleToggleVideo}
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                border: "1px white solid",
-              }}>
-              {onVideo ? <VideocamIcon /> : <VideocamOffIcon />}
-            </IconButton>
-          </div>
-        </div>
+        <section>
+          <IconButton
+            onClick={onHandleToggleMic}
+            style={{
+              color: "white",
+              backgroundColor: "black",
+              border: "1px white solid",
+            }}>
+            {onMic ? <MicIcon /> : <MicOffIcon />}
+          </IconButton>
+          <IconButton
+            onClick={onHandleToggleVideo}
+            style={{
+              color: "white",
+              backgroundColor: "black",
+              border: "1px white solid",
+            }}>
+            {onVideo ? <VideocamIcon /> : <VideocamOffIcon />}
+          </IconButton>
+        </section>
       )}
-    </div>
+    </Container>
   );
 };
 
 export default Participant;
+
+const Container = styled.div`
+  /* border: 1px red solid; */
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+
+  > h3 {
+    font-weight: normal;
+  }
+
+  > video {
+    width: 100% !important;
+    max-width: 600px;
+    min-width: 250px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+  }
+
+  > section {
+    display: flex;
+    width: 100%;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  button {
+    background-color: #852b2b !important;
+    margin: 10px;
+  }
+`;
