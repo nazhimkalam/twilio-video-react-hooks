@@ -11,7 +11,7 @@ const Participant = ({ participant, currentUser }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
   const [onMic, setonMic] = useState(true);
-  const [onVideo, setonVideo] = useState(true);
+  const [onVideo, setonVideo] = useState(false);
 
   const videoRef = useRef();
   const audioRef = useRef();
@@ -73,6 +73,10 @@ const Participant = ({ participant, currentUser }) => {
         videoTrack.detach();
       };
     }
+  }, [videoTracks]);
+  
+  useEffect(() => {
+    videoTracks[0]?.stop();
   }, [videoTracks]);
 
   useEffect(() => {
